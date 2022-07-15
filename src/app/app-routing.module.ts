@@ -1,9 +1,9 @@
-import { PrincipalComponent } from './principal/principal.component';
+import { HomeComponent } from './pages/home/home.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', component: PrincipalComponent },
+  { path: '', component: HomeComponent },
   // { path: 'products/:productId', component: ProductDetailsComponent },
 ];
 
