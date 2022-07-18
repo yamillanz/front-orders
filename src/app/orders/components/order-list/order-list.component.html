@@ -1,4 +1,19 @@
-<p-table [value]="orders" responsiveLayout="scroll">
+<p-table #dtOrders [value]="orders" styleClass="p-datatable-striped p-datatable-sm" responsiveLayout="scroll"
+    [globalFilterFields]="['userName']" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="caption">
+        <div class="d-flex align-items-center justify-content-between">
+            <h5 class="m-0">Manage Orders</h5>
+            <div id="utils" class="d-flex align-items-center justify-content-end">
+                <div class="mx-2">
+                    <input pInputText type="text" #inputFilter
+                        (input)="dtOrders.filterGlobal(inputFilter.value, 'contains')" placeholder="Search..."
+                        type="search" class="form-control form-control-dark text-white bg-dark" />
+                </div>
+                <button pButton pRipple label="Order" icon="pi pi-plus" class="p-button-success"
+                    (click)="newOrderShow()"></button>
+            </div>
+        </div>
+    </ng-template>
     <ng-template pTemplate="header">
         <tr>
             <th>ID</th>
@@ -7,7 +22,7 @@
             <th>Created</th>
             <th>Needed</th>
             <th>Total</th>
-            <th></th>
+            <th style="width: 4rem;"></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-order>
@@ -18,8 +33,10 @@
             <td>{{order.dateCreated | date: 'dd/MM/yyyy hh:mm a'}}</td>
             <td>{{order.dateTime | date: 'dd/MM/yyyy'}}</td>
             <td>{{order.totalValue}}</td>
-            <td>
+            <td class="d-flex justify-content-center">
                 <button pButton pRipple type="button" icon="pi pi-pencil"
+                    class="p-button-rounded p-button-text"></button>
+                <button type="button" pButton pRipple icon="pi pi-trash"
                     class="p-button-rounded p-button-text"></button>
             </td>
         </tr>

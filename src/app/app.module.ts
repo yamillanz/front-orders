@@ -1,9 +1,13 @@
+// import { DialogModule } from 'primeng/dialog';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
@@ -33,6 +37,10 @@ import { UserSelectComponent } from './users/components/user-select/user-select.
     HttpClientModule,
     TableModule,
     ButtonModule,
+    DynamicDialogModule,
+    // DialogModule,
+    DropdownModule,
+    InputNumberModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
