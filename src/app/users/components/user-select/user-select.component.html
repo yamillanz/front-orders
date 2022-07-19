@@ -1,1 +1,4 @@
-<p>user-select works!</p>
+<p-dropdown inputId="users" #inputUsers [options]="users" placeholder="Select a user..." optionLabel="name"
+    optionValue="idUser" [style]="{'width':'100%'}" styleClass="bk-dark" [virtualScroll]="true" [showClear]="true"
+    scrollHeight="10rem" (onChange)="userSelected(inputUsers.value)">
+</p-dropdown>

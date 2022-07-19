@@ -12,8 +12,6 @@ import { OrdersService } from '../../services/orders.service';
 })
 export class OrderListComponent {
   orders: OrderDTO[] = [];
-  // orderDetailsDialog: boolean = false;
-  // ref: DynamicDialogRef;
 
   constructor(
     private orderServices: OrdersService,
@@ -26,7 +24,6 @@ export class OrderListComponent {
   }
 
   newOrderShow() {
-    // this.orderDetailsDialog = true;
     const ref = this.dialogService.open(OrderDetailsComponent, {
       header: 'Order Details',
       width: '50%',

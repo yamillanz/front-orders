@@ -13,4 +13,8 @@ export class UsersService {
   getAUser(id: number): Observable<UserDTO> {
     return this.http.get<UserDTO>(environment.URL_USERS + id);
   }
+
+  getAllUser(): Observable<UserDTO[]> {
+    return this.http.get<UserDTO[]>(environment.URL_USERS);
+  }
 }

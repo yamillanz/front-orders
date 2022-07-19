@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { UserDTO } from './../../models/user';
+import { UsersService } from './../../services/users.service';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-user-select',
   templateUrl: './user-select.component.html',
-  styleUrls: ['./user-select.component.scss']
+  styleUrls: ['./user-select.component.scss'],
 })
-export class UserSelectComponent implements OnInit {
+export class UserSelectComponent {
+  @Input() userSelectedId: string = '';
+  @Output() userSelectedIdChange: EventEmitter<string> = new EventEmitter();
 
-  constructor() { }
-
-  ngOnInit(): void {
+  users: UserDTO[] = [];
+  constructor(private usrSrv: UsersService) {
+    this.usrSrv.getAllUser().subscribe((data) => (this.users = [...data]));
   }
 
+  userSelected(idUser: string) {
+    this.userSelectedIdChange.emit(idUser);
+  }
 }

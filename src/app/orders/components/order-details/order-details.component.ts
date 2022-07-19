@@ -8,13 +8,14 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 })
 export class OrderDetailsComponent implements OnInit {
   submitted: boolean = false;
-  cities = [
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' },
-  ];
+  // cities = [
+  //   { name: 'New York', code: 'NY' },
+  //   { name: 'Rome', code: 'RM' },
+  //   { name: 'London', code: 'LDN' },
+  //   { name: 'Istanbul', code: 'IST' },
+  //   { name: 'Paris', code: 'PRS' },
+  // ];
+  userSelectedId: string = 'algo';
   constructor(public ref: DynamicDialogRef) {}
 
   ngOnInit(): void {}
