@@ -1,30 +1,31 @@
-<div class="row g-3">
-    <div class="col-6">
-        <!-- <label for="inputEmail4" class="form-label">Email</label> -->
-        <input type="text" pInputText class="form-control bg-dark text-white" placeholder="Order Number"
-            aria-label="Order Number" required autofocus>
-        <small class="p-error" *ngIf="submitted">Order Number is required.</small>
+<form [formGroup]="formOrder" novalidate >
+    <div class="row g-3">
+        <div class="col-6">
+            <input type="text" pInputText class="form-control bg-dark text-white" placeholder="Order Number"
+                aria-label="Order Number" required autofocus id="orderNumber" formControlName="orderNumber">
+            <small class="p-error" *ngIf="submitted">Order Number is required.</small>
+        </div>
+        <div class="col-6">
+            <app-user-select [(userSelectedId)]="userSelectedId" [parentForm]="formOrder"></app-user-select>
+        </div>
+        <div class="col-md-6">
+            <input type="text" pInputText class="form-control bg-dark text-white" id="dateTime"
+                placeholder="Date Needed" aria-label="Date Needed" formControlName="dateTime">
+        </div>
+        <div class="col-md-6">
+            <input type="text" pInputText class="form-control bg-dark text-white" id="providerName"
+                placeholder="Provider Name" aria-label="Provider Name" formControlName="providerName">
+        </div>
+        <div class="col-md-12">
+            <input type="text" pInputText class="form-control bg-dark text-white" id="observation"
+                placeholder="Observations" aria-label="Observations" formControlName="observation">
+        </div>
     </div>
-    <div class="col-6">
-        <app-user-select [(userSelectedId)]="userSelectedId"></app-user-select>
+    <div #buttons class="d-flex align-content-center justify-content-end mt-4">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+            (click)="hideDialog($event)"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+            (click)="saveProduct($event)"></button>
 
     </div>
-    <div class="col-md-6">
-        <input type="text" pInputText class="form-control bg-dark text-white" id="dateTime" placeholder="Date Needed"
-            aria-label="Date Needed" required>
-    </div>
-    <div class="col-md-6">
-        <input type="text" pInputText class="form-control bg-dark text-white" id="providerName"
-            placeholder="Provider Name" aria-label="Provider Name">
-    </div>
-    <div class="col-md-12">
-        <input type="text" pInputText class="form-control bg-dark text-white" id="observations"
-            placeholder="Observations" aria-label="Observations">
-    </div>
-</div>
-<div #buttons class="d-flex align-content-center justify-content-end mt-4">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
-    <br>
-
-</div>
+</form>

@@ -1,5 +1,5 @@
 <p-table #dtOrders [value]="orders" styleClass="p-datatable-striped p-datatable-sm" responsiveLayout="scroll"
-    [globalFilterFields]="['userName']" [paginator]="true" [rows]="10">
+    [globalFilterFields]="['userName']" [paginator]="true" [rows]="10" dataKey="idOrder">
     <ng-template pTemplate="caption">
         <div class="d-flex align-items-center justify-content-between">
             <h5 class="m-0">Manage Orders</h5>
@@ -16,7 +16,8 @@
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th>ID</th>
+            <th pSortableColumn="idOrder">ID <p-sortIcon field="idOrder"></p-sortIcon>
+            </th>
             <th>Order Number</th>
             <th>User</th>
             <th>Created</th>
@@ -34,11 +35,13 @@
             <td>{{order.dateTime | date: 'dd/MM/yyyy'}}</td>
             <td>{{order.totalValue}}</td>
             <td class="d-flex justify-content-center">
-                <button pButton pRipple type="button" icon="pi pi-pencil"
-                    class="p-button-rounded p-button-text"></button>
-                <button type="button" pButton pRipple icon="pi pi-trash"
-                    class="p-button-rounded p-button-text"></button>
+                <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                    (click)="updateOrder(order)"></button>
+                <button type="button" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text"
+                    (click)="deleteOrder(order)"></button>
             </td>
         </tr>
     </ng-template>
 </p-table>
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

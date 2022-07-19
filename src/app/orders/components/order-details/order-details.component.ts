@@ -1,5 +1,7 @@
+import { OrderDTO } from './../../models/order';
 import { Component, OnInit } from '@angular/core';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-order-details',
@@ -8,20 +10,46 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 })
 export class OrderDetailsComponent implements OnInit {
   submitted: boolean = false;
-  // cities = [
-  //   { name: 'New York', code: 'NY' },
-  //   { name: 'Rome', code: 'RM' },
-  //   { name: 'London', code: 'LDN' },
-  //   { name: 'Istanbul', code: 'IST' },
-  //   { name: 'Paris', code: 'PRS' },
-  // ];
-  userSelectedId: string = 'algo';
-  constructor(public ref: DynamicDialogRef) {}
+  formOrder: FormGroup = new FormGroup({});
+  userSelectedId: string = '';
+  inputOrderData: OrderDTO = {};
 
-  ngOnInit(): void {}
+  constructor(
+    public ref: DynamicDialogRef,
+    public config: DynamicDialogConfig,
+    private fb: FormBuilder
+  ) {}
 
-  hideDialog() {
-    this.ref.close({});
+  ngOnInit(): void {
+    this.inputOrderData = { ...this.config.data };
+    this.inputOrderData.dateTime &&
+      (this.inputOrderData.dateTime = this.inputOrderData.dateTime?.substring(
+        0,
+        this.inputOrderData.dateTime?.indexOf('T')
+      ));
+    this.formOrder = this.fb.group({
+      orderNumber: [this.inputOrderData.orderNumber ?? '', Validators.required],
+      idUser: [this.inputOrderData.idUser ?? null],
+      dateTime: [this.inputOrderData.dateTime ?? '', Validators.required],
+      providerName: [this.inputOrderData.providerName ?? ''],
+      observation: [this.inputOrderData.observation ?? ''],
+    });
+    // this.formOrder.value
   }
-  saveProduct() {}
+
+  saveProduct($event: any) {
+    $event.preventDefault();
+    if (this.formOrder.valid) {
+      let savedOrder: OrderDTO = {
+        ...this.formOrder.value,
+        idOrder: this.inputOrderData.idOrder,
+      };
+      this.ref.close(savedOrder);
+    }
+  }
+
+  hideDialog($event: any) {
+    $event.preventDefault();
+    this.ref.close(null);
+  }
 }
