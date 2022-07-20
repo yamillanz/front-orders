@@ -15,7 +15,7 @@ export class ProductService {
 
     typeof productAdapter.idOrder === 'string' &&
       (productAdapter.idOrder = +productAdapter?.idOrder);
-      
+
     typeof productAdapter.qtyBox === 'string' &&
       (productAdapter.qtyBox = +productAdapter?.qtyBox);
     typeof productAdapter.quantity === 'string' &&
@@ -31,19 +31,27 @@ export class ProductService {
 
     return productAdapter;
   }
+
   getProducts(idOrder: number): Observable<ProductDTO[]> {
     return this.http
       .get<ProductDTO[]>(environment.URL_PRODUCTS)
       .pipe(
-        map((data) => data.filter((product) => product.idOrder === idOrder))
+        map((data) =>
+          data.filter(
+            (product) => product.idOrder === idOrder && product.status === 1
+          )
+        )
       );
-  }
-  saveAProduct(newProduct: ProductDTO): Observable<any> {
-    newProduct = { ...this.adapterProduct(newProduct) };
-    console.log(newProduct);
-    return this.http.post(environment.URL_PRODUCTS, newProduct);
   }
   getAProduct(idProduct: number): Observable<ProductDTO> {
     return this.http.get<ProductDTO>(environment.URL_PRODUCTS + idProduct);
+  }
+  saveAProduct(newProduct: ProductDTO): Observable<any> {
+    newProduct = { ...this.adapterProduct(newProduct) };
+    return this.http.post(environment.URL_PRODUCTS, newProduct);
+  }
+  updateProduct(idProduct: number, product: ProductDTO): Observable<any> {
+    product = { ...this.adapterProduct(product) };
+    return this.http.put(environment.URL_PRODUCTS + idProduct, product);
   }
 }

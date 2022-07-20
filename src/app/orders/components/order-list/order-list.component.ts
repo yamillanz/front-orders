@@ -72,7 +72,7 @@ export class OrderListComponent implements OnInit {
 
   async deleteOrder(order: OrderDTO) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected products?',
+      message: 'Are you sure you want to delete the selected order?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: async () => {
