@@ -1,1 +1,44 @@
-<p>products-list works!</p>
+<div class="m-3">
+    <p-table [value]="products" dataKey="idOrderProduct" responsiveLayout="scroll" [paginator]="false" [rows]="5">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="idOrderProduct">ID <p-sortIcon field="idOrderProduct"></p-sortIcon>
+                </th>
+                <th pSortableColumn="sku">#SKU <p-sortIcon field="sku"></p-sortIcon>
+                </th>
+                <th pSortableColumn="descriptionProd">Name <p-sortIcon field="descriptionProd"></p-sortIcon>
+                </th>
+                <th pSortableColumn="unit">Unit <p-sortIcon field="unit"></p-sortIcon>
+                </th>
+                <th pSortableColumn="valueUnit">Value x Unit <p-sortIcon field="valueUnit"></p-sortIcon>
+                </th>
+                <th pSortableColumn="quantity">Quantity <p-sortIcon field="quantity"></p-sortIcon>
+                </th>
+                <th style="width: 4rem;"></th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>{{product.idOrderProduct}}</td>
+                <td>{{product.sku}}</td>
+                <td>{{product.descriptionProd}}</td>
+                <td>{{product.unit}}</td>
+                <td>{{product.valueUnit | currency:'USD'}}</td>
+                <td>{{product.quantity}}</td>
+                <td class="d-flex justify-content-center">
+                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                        (click)="updateProduct(product)"></button>
+                    <button type="button" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-text"
+                        (click)="deleteProduct(product)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="d-flex align-items-center justify-content-end">
+                <button pButton pRipple label="Product" icon="pi pi-plus" class="p-button-success p-button-sm"
+                    (click)="newProductShow()"></button>
+            </div>
+        </ng-template>
+    </p-table>
+</div>

@@ -3,7 +3,7 @@ import { OrderDTO } from './../models/order';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { filter, firstValueFrom, Observable, tap, map } from 'rxjs';
+import { firstValueFrom, Observable, tap, map } from 'rxjs';
 import { UsersService } from './../../users/services/users.service';
 
 @Injectable({
@@ -14,7 +14,6 @@ export class OrdersService {
 
   getOrders(): Observable<OrderDTO[]> {
     return this.http.get<OrderDTO[]>(environment.URL_ORDERS).pipe(
-      // filter((data => return data[0].idUser === 0),
       map((data) => data.filter((order) => order.status === 1)),
       tap(async (data) => {
         for (const order of data) {
