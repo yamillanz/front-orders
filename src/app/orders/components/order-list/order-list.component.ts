@@ -1,5 +1,5 @@
 import { OrderDetailsComponent } from './../order-details/order-details.component';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService } from 'primeng/dynamicdialog';
 import { Component, OnInit } from '@angular/core';
 import { OrderDTO } from '../../models/order';
 import { OrdersService } from '../../services/orders.service';

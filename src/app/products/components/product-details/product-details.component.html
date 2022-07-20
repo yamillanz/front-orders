@@ -1,49 +1,49 @@
-<!-- <form [formGroup]="formOrder" novalidate> -->
-<div class="row g-3">
-    <div class="col-md-12">
-        <input type="text" pInputText class="form-control bg-dark text-white" id="descriptionProd"
-            placeholder="Description" aria-label="Description" formControlName="descriptionProd">
-    </div>
-    <div class="col-6">
-        <input type="text" pInputText class="form-control bg-dark text-white" placeholder="SKU" aria-label="SKU"
-            required autofocus id="sku" formControlName="sku">
-        <small class="p-error" *ngIf="submitted">Order Number is required.</small>
-    </div>
-    <div class="col-6">
-        <input type="text" pInputText class="form-control bg-dark text-white" placeholder="Mark" aria-label="Mark"
-            required autofocus id="mark" formControlName="mark">
-        <small class="p-error" *ngIf="submitted">Order Number is required.</small>
-    </div>
-    <div class="col-md-6">
-        <input type="text" pInputText class="form-control bg-dark text-white" id="unit" placeholder="Unit"
-            aria-label="Unit" formControlName="unit">
-    </div>
-    <div class="col-md-6">
-        <input type="text" pInputText class="form-control bg-dark text-white" id="valueUnit" placeholder="Value unit"
-            aria-label="Value unit" formControlName="valueUnit">
-    </div>
-    <div class="col-md-6">
-        <input type="text" pInputText class="form-control bg-dark text-white" id="quantity" placeholder="Quantity"
-            aria-label="Quantity" formControlName="quantity">
-    </div>
-    <div class="col-md-6">
-        <input type="text" pInputText class="form-control bg-dark text-white" id="qtyBox" placeholder="Quanity Box"
-            aria-label="Quanity Box" formControlName="qtyBox">
-    </div>
-    <div class="col-md-6">
-        <input type="text" pInputText class="form-control bg-dark text-white" id="weight" placeholder="Weight"
-            aria-label="Weight" formControlName="weight">
-    </div>
-    <div class="col-md-6">
-        <input type="text" pInputText class="form-control bg-dark text-white" id="volume" placeholder="Volume"
-            aria-label="Volume" formControlName="volume">
-    </div>
+<form [formGroup]="formProduct" novalidate>
+    <div class="row g-3">
+        <div class="col-md-12">
+            <input type="text" pInputText class="form-control bg-dark text-white" id="descriptionProd"
+                placeholder="Description" aria-label="Description" formControlName="descriptionProd">
+        </div>
+        <div class="col-6">
+            <input type="text" pInputText class="form-control bg-dark text-white" placeholder="SKU" aria-label="SKU"
+                required autofocus id="sku" formControlName="sku">
+            <small class="p-error" *ngIf="submitted">Order Number is required.</small>
+        </div>
+        <div class="col-6">
+            <input type="text" pInputText class="form-control bg-dark text-white" placeholder="Mark" aria-label="Mark"
+                required autofocus id="mark" formControlName="mark">
+            <small class="p-error" *ngIf="submitted">Order Number is required.</small>
+        </div>
+        <div class="col-md-6">
+            <input type="text" pInputText class="form-control bg-dark text-white" id="unit" placeholder="Unit"
+                aria-label="Unit" formControlName="unit">
+        </div>
+        <div class="col-md-6">
+            <input type="text" pInputText class="form-control bg-dark text-white" id="valueUnit"
+                placeholder="Value unit" aria-label="Value unit" formControlName="valueUnit">
+        </div>
+        <div class="col-md-6">
+            <input type="text" pInputText class="form-control bg-dark text-white" id="quantity" placeholder="Quantity"
+                aria-label="Quantity" formControlName="quantity">
+        </div>
+        <div class="col-md-6">
+            <input type="text" pInputText class="form-control bg-dark text-white" id="qtyBox" placeholder="Quanity Box"
+                aria-label="Quanity Box" formControlName="qtyBox">
+        </div>
+        <div class="col-md-6">
+            <input type="text" pInputText class="form-control bg-dark text-white" id="weight" placeholder="Weight"
+                aria-label="Weight" formControlName="weight">
+        </div>
+        <div class="col-md-6">
+            <input type="text" pInputText class="form-control bg-dark text-white" id="volume" placeholder="Volume"
+                aria-label="Volume" formControlName="volume">
+        </div>
 
-</div>
-<div #buttons class="d-flex align-content-center justify-content-end mt-4">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
-        (click)="hideDialog($event)"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
-        (click)="saveProduct($event)"></button>
-</div>
-<!-- </form> -->
+    </div>
+    <div #buttons class="d-flex align-content-center justify-content-end mt-4">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+            (click)="hideDialog($event)"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+            (click)="saveProduct($event)"></button>
+    </div>
+</form>

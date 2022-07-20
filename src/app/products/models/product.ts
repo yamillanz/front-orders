@@ -10,6 +10,6 @@ export interface Products {
   weight: number;
   volume: number;
   mark: string;
-  status: boolean;
+  status: number;
 }
 export interface ProductDTO extends Partial<Products> {}
