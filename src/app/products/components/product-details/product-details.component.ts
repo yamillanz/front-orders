@@ -12,7 +12,7 @@ export class ProductDetailsComponent implements OnInit {
   submitted: boolean = false;
   formProduct: FormGroup = new FormGroup({});
   inputProductData: ProductDTO = {};
-
+  readonlySKU: boolean = false;
   constructor(
     private fb: FormBuilder,
     public config: DynamicDialogConfig,
@@ -21,16 +21,19 @@ export class ProductDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.inputProductData = { ...this.config.data };
-
+    this.readonlySKU = this.inputProductData.sku ? true : false;
     this.formProduct = this.fb.group({
       descriptionProd: [
         this.inputProductData.descriptionProd ?? '',
         Validators.required,
       ],
-      sku: [this.inputProductData.sku ?? '', Validators.required],
+      sku: [
+        { value: this.inputProductData.sku ?? '', disabled: this.readonlySKU },
+        Validators.required,
+      ],
+      unit: [this.inputProductData.unit ?? '', Validators.required],
+      valueUnit: [this.inputProductData.valueUnit ?? '', Validators.required],
       mark: [this.inputProductData.mark ?? ''],
-      unit: [this.inputProductData.unit ?? ''],
-      valueUnit: [this.inputProductData.valueUnit ?? ''],
       quantity: [this.inputProductData.quantity ?? ''],
       qtyBox: [this.inputProductData.qtyBox ?? ''],
       weight: [this.inputProductData.weight ?? ''],

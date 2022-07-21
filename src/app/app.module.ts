@@ -12,6 +12,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
+import { CalendarModule } from 'primeng/calendar';
+import { InputMaskModule } from 'primeng/inputmask';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
@@ -46,6 +48,8 @@ import { UserSelectComponent } from './users/components/user-select/user-select.
     InputNumberModule,
     ConfirmDialogModule,
     ToastModule,
+    InputMaskModule,
+    CalendarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

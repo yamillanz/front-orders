@@ -1,22 +1,45 @@
-<form [formGroup]="formOrder" novalidate >
+<form [formGroup]="formOrder" novalidate>
     <div class="row g-3">
         <div class="col-6">
+            <label for="orderNumber" class="col-sm-2 col-form-label col-form-label-sm w-100">Order number:</label>
             <input type="text" pInputText class="form-control bg-dark text-white" placeholder="Order Number"
                 aria-label="Order Number" required autofocus id="orderNumber" formControlName="orderNumber">
-            <small class="p-error" *ngIf="submitted">Order Number is required.</small>
+            <div *ngIf="formOrder.get('orderNumber')?.invalid && 
+                formOrder.get('orderNumber')?.errors && 
+                (formOrder.get('orderNumber')?.dirty || formOrder.get('orderNumber')?.touched)">
+                <small class="text-danger" *ngIf="formOrder.get('orderNumber')?.hasError('required')">
+                    This field is required.
+                </small>
+            </div>
         </div>
         <div class="col-6">
+            <label for="idUser" class="col-sm-2 col-form-label col-form-label-sm w-100">User:</label>
             <app-user-select [(userSelectedId)]="userSelectedId" [parentForm]="formOrder"></app-user-select>
         </div>
         <div class="col-md-6">
-            <input type="text" pInputText class="form-control bg-dark text-white" id="dateTime"
-                placeholder="Date Needed" aria-label="Date Needed" formControlName="dateTime">
+            <!-- <input type="text" pInputText class="form-control bg-dark text-white" id="dateTime"
+                placeholder="Date Needed" aria-label="Date Needed" formControlName="dateTime"> -->
+            <!-- <p-calendar inputId="basic" id="dateTime" placeholder="Date Needed" aria-label="Date Needed"
+                formControlName="dateTime" [inline]="true" [showWeek]="true"></p-calendar> -->
+            <label for="dateTime" class="col-sm-2 col-form-label col-form-label-sm w-100">Date Needed</label>
+            <p-inputMask mask="9999-99-99" slotChar="yyyy-mm-dd" id="dateTime"
+                [style]="{'width':'100%', 'border':'1px solid white'}" placeholder="yyyy-mm-dd" aria-label="Date Needed"
+                formControlName="dateTime"></p-inputMask>
+            <div *ngIf="formOrder.get('dateTime')?.invalid && 
+                formOrder.get('dateTime')?.errors && 
+                (formOrder.get('dateTime')?.dirty || formOrder.get('dateTime')?.touched)">
+                <small class="text-danger" *ngIf="formOrder.get('dateTime')?.hasError('required')">
+                    This field is required.
+                </small>
+            </div>
         </div>
         <div class="col-md-6">
+            <label for="providerName" class="col-sm-2 col-form-label col-form-label-sm w-100">Provider Name:</label>
             <input type="text" pInputText class="form-control bg-dark text-white" id="providerName"
                 placeholder="Provider Name" aria-label="Provider Name" formControlName="providerName">
         </div>
         <div class="col-md-12">
+            <label for="observation" class="col-sm-2 col-form-label col-form-label-sm w-100">Observations:</label>
             <input type="text" pInputText class="form-control bg-dark text-white" id="observation"
                 placeholder="Observations" aria-label="Observations" formControlName="observation">
         </div>
@@ -24,7 +47,7 @@
     <div #buttons class="d-flex align-content-center justify-content-end mt-4">
         <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
             (click)="hideDialog($event)"></button>
-        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+        <button pButton pRipple label="Save" [disabled]="formOrder.invalid" icon="pi pi-check" class="p-button-text"
             (click)="saveProduct($event)"></button>
 
     </div>

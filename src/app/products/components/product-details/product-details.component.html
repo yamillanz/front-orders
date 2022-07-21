@@ -1,49 +1,92 @@
 <form [formGroup]="formProduct" novalidate>
     <div class="row g-3">
         <div class="col-md-12">
-            <input type="text" pInputText class="form-control bg-dark text-white" id="descriptionProd"
-                placeholder="Description" aria-label="Description" formControlName="descriptionProd">
+            <label for="descriptionProd" class="col-sm-2 col-form-label col-form-label-sm">Description:</label>
+            <input type="text" pInputText class="form-control bg-dark text-white" id="descriptionProd" placeholder=""
+                aria-label="Description" formControlName="descriptionProd" autofocus>
+            <div *ngIf="formProduct.get('descriptionProd')?.invalid && 
+                formProduct.get('descriptionProd')?.errors && 
+                (formProduct.get('descriptionProd')?.dirty || formProduct.get('descriptionProd')?.touched)">
+                <small class="text-danger" *ngIf="formProduct.get('descriptionProd')?.hasError('required')">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+        <!-- [attr.readonly]="readonlySKU" -->
+        <div class="col-6">
+            <label for="sku" class="col-sm-2 col-form-label col-form-label-sm">#SKU:</label>
+            <input type="text" pInputText class="form-control bg-dark text-white" placeholder="" aria-label="SKU"
+                required id="sku" formControlName="sku">
+            <div *ngIf="formProduct.get('sku')?.invalid && 
+                formProduct.get('sku')?.errors && 
+                (formProduct.get('sku')?.dirty || formProduct.get('sku')?.touched)">
+                <small class="text-danger" *ngIf="formProduct.get('sku')?.hasError('required')">
+                    This field is required.
+                </small>
+            </div>
+
         </div>
         <div class="col-6">
-            <input type="text" pInputText class="form-control bg-dark text-white" placeholder="SKU" aria-label="SKU"
-                required autofocus id="sku" formControlName="sku">
-            <small class="p-error" *ngIf="submitted">Order Number is required.</small>
-        </div>
-        <div class="col-6">
+            <label for="mark" class="col-sm-2 col-form-label col-form-label-sm">Mark:</label>
             <input type="text" pInputText class="form-control bg-dark text-white" placeholder="Mark" aria-label="Mark"
-                required autofocus id="mark" formControlName="mark">
+                id="mark" formControlName="mark">
             <small class="p-error" *ngIf="submitted">Order Number is required.</small>
         </div>
         <div class="col-md-6">
+            <label for="unit" class="col-sm-2 col-form-label col-form-label-sm">Units:</label>
             <input type="text" pInputText class="form-control bg-dark text-white" id="unit" placeholder="Unit"
                 aria-label="Unit" formControlName="unit">
+            <div *ngIf="formProduct.get('unit')?.invalid && 
+                formProduct.get('unit')?.errors && 
+                (formProduct.get('unit')?.dirty || formProduct.get('unit')?.touched)">
+                <small class="text-danger" *ngIf="formProduct.get('unit')?.hasError('required')">
+                    This field is required.
+                </small>
+            </div>
         </div>
         <div class="col-md-6">
-            <input type="text" pInputText class="form-control bg-dark text-white" id="valueUnit"
-                placeholder="Value unit" aria-label="Value unit" formControlName="valueUnit">
+            <!-- <input type="text" pInputText class="form-control bg-dark text-white" id="valueUnit"
+                placeholder="Value unit" aria-label="Value unit" formControlName="valueUnit"> -->
+            <label for="valueUnit" class="col-sm-2 col-form-label col-form-label-sm w-100">Value units:</label>
+            <p-inputNumber inputId="valueUnit" mode="decimal" locale="en-US" [minFractionDigits]="2" id="valueUnit"
+                placeholder="Value unit" aria-label="Value unit" formControlName="valueUnit"
+                [style]="{'width':'22.5rem'}">
+            </p-inputNumber>
         </div>
         <div class="col-md-6">
-            <input type="text" pInputText class="form-control bg-dark text-white" id="quantity" placeholder="Quantity"
-                aria-label="Quantity" formControlName="quantity">
+            <!-- <input type="text" pInputText class="form-control bg-dark text-white" id="quantity" placeholder="Quantity"
+                aria-label="Quantity" formControlName="quantity"> -->
+            <label for="quantity" class="col-sm-2 col-form-label col-form-label-sm w-100">Quantity:</label>
+            <p-inputNumber inputId="quantity" mode="decimal" locale="en-US" [minFractionDigits]="2" id="quantity"
+                placeholder="Quantity" aria-label="Quantity" formControlName="quantity" [style]="{'width':'22.5rem'}">
+            </p-inputNumber>
         </div>
         <div class="col-md-6">
-            <input type="text" pInputText class="form-control bg-dark text-white" id="qtyBox" placeholder="Quanity Box"
+            <label for="qtyBox" class="col-sm-2 col-form-label col-form-label-sm w-100">Quantity for box:</label>
+            <input type="text" pInputText class="form-control bg-dark text-white" id="qtyBox" placeholder="Quantity Box"
                 aria-label="Quanity Box" formControlName="qtyBox">
         </div>
         <div class="col-md-6">
-            <input type="text" pInputText class="form-control bg-dark text-white" id="weight" placeholder="Weight"
-                aria-label="Weight" formControlName="weight">
+            <!-- <input type="text" pInputText class="form-control bg-dark text-white" id="weight" placeholder="Weight"
+                aria-label="Weight" formControlName="weight"> -->
+            <label for="weight" class="col-sm-2 col-form-label col-form-label-sm w-100">Weight:</label>
+            <p-inputNumber inputId="weight" mode="decimal" locale="en-US" [minFractionDigits]="2" id="weight"
+                placeholder="Weight" aria-label="Weight" formControlName="weight" [style]="{'width':'22.5rem'}">
+            </p-inputNumber>
         </div>
         <div class="col-md-6">
-            <input type="text" pInputText class="form-control bg-dark text-white" id="volume" placeholder="Volume"
-                aria-label="Volume" formControlName="volume">
+            <!-- <input type="text" pInputText class="form-control bg-dark text-white" id="volume" placeholder="Volume"
+                aria-label="Volume" formControlName="volume"> -->
+            <label for="volume" class="col-sm-2 col-form-label col-form-label-sm w-100">Volume:</label>
+            <p-inputNumber inputId="volume" mode="decimal" locale="en-US" [minFractionDigits]="2" id="volume"
+                placeholder="Volume" aria-label="Volume" formControlName="volume" [style]="{'width':'22.5rem'}">
+            </p-inputNumber>
         </div>
-
     </div>
     <div #buttons class="d-flex align-content-center justify-content-end mt-4">
         <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
             (click)="hideDialog($event)"></button>
-        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+        <button pButton pRipple label="Save" [disabled]="formProduct.invalid" icon="pi pi-check" class="p-button-text"
             (click)="saveProduct($event)"></button>
     </div>
 </form>

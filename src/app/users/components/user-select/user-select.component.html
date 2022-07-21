@@ -1,6 +1,6 @@
 <ng-container [formGroup]="parentForm">
-    <p-dropdown inputId="users" #inputUsers [options]="users" placeholder="Select a user..." optionLabel="name"
-        optionValue="idUser" [style]="{'width':'100%'}" styleClass="bk-dark" [virtualScroll]="true" [showClear]="true"
-        scrollHeight="10rem" (onChange)="userSelected(inputUsers.value)" formControlName="idUser">
+    <p-dropdown #idUser [options]="users" placeholder="Select a user..." optionLabel="name" optionValue="idUser"
+        [style]="{'width':'100%', 'border-color':'white'}" styleClass="bk-dark" [virtualScroll]="true" [showClear]="true" scrollHeight="10rem"
+        (onChange)="userSelected(idUser.value)" formControlName="idUser">
     </p-dropdown>
 </ng-container>
