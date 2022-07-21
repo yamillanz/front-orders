@@ -26,41 +26,49 @@ export class OrderListComponent implements OnInit {
     this.gettingDataOrders();
   }
 
-  gettingDataOrders() {
+  /**
+   * create a dialog object of "OrderDetailsComponent" type with certain characteristics
+   */
+  private createOrderDetailsDialog(dataInput: any = null) {
+    return this.dialogService.open(OrderDetailsComponent, {
+      header: 'Order Details',
+      width: '60%',
+      data: dataInput,
+    });
+  }
+  /**
+   * get all orders calling the rest api and put it into "orders" variable
+   */
+  private gettingDataOrders() {
     this.orderServices.getOrders().subscribe((data) => {
       console.log(data);
       this.orders = data;
     });
   }
-
+  /**
+   * create and show the dialog with order's form, next, after close the dialog
+   * get the data and send it to the rest api""
+   */
   newOrderShow() {
-    const ref = this.dialogService.open(OrderDetailsComponent, {
-      header: 'Order Details',
-      width: '50%',
-      // contentStyle: {"max-height": "1000px", "overflow": "auto"},
-      // baseZIndex: 10000
-    });
-    ref.onClose.subscribe(async (Order: OrderDTO) => {
+    const dialog = this.createOrderDetailsDialog();
+    dialog.onClose.subscribe(async (Order: OrderDTO) => {
       if (Order) {
-        console.log('Order', Order);
         delete Order.idOrder;
-        Order.totalValue = 333.333;
         Order.status = 1;
         await firstValueFrom(this.orderServices.saveOrder(Order));
         this.gettingDataOrders();
       }
     });
   }
+  /**
+   * create and show the dialog with order's form, next, after close the dialog
+   * get the data and send it to the rest api ""
+   */
 
   updateOrder(order: OrderDTO) {
-    const ref = this.dialogService.open(OrderDetailsComponent, {
-      data: order,
-      header: 'Order Details',
-      width: '50%',
-    });
-    ref.onClose.subscribe(async (Order: OrderDTO) => {
+    const dialog = this.createOrderDetailsDialog(order);
+    dialog.onClose.subscribe(async (Order: OrderDTO) => {
       if (Order) {
-        // console.log('Order', Order);
         const { idOrder, ...restOrder } = Order;
         await firstValueFrom(
           this.orderServices.update(idOrder ?? -1, restOrder)
@@ -69,7 +77,10 @@ export class OrderListComponent implements OnInit {
       }
     });
   }
-
+  /**
+   * function to do a logical delete to the order, first ask for confirm, then send
+   * the data to the rest api and finally send a confirmation messages
+   */
   async deleteOrder(order: OrderDTO) {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete the selected order?',
@@ -77,10 +88,6 @@ export class OrderListComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: async () => {
         const { idOrder, userName, dateCreated, ...restOrder } = order;
-        restOrder.dateTime = restOrder.dateTime?.substring(
-          0,
-          restOrder.dateTime?.indexOf('T')
-        );
         restOrder.status = 0;
         await firstValueFrom(
           this.orderServices.update(idOrder ?? -1, restOrder)

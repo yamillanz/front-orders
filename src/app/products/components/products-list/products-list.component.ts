@@ -24,6 +24,16 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     private confirmationService: ConfirmationService
   ) {}
 
+  /**
+   * create a dialog object of "ProductDetailsComponent" type with certain characteristics
+   */
+  private createOrderDetailsDialog(dataInput: any = null) {
+    return this.dialogService.open(ProductDetailsComponent, {
+      header: 'Order Details',
+      width: '60%',
+      data: dataInput,
+    });
+  }
   gettingDataProducts() {
     this.subs.add(
       this.productsSvr.getProducts(+this.idOrder).subscribe((data) => {
@@ -50,9 +60,6 @@ export class ProductsListComponent implements OnInit, OnDestroy {
           this.productsSvr.updateProduct(idOrderProduct ?? -1, restDataProduct)
         );
         this.gettingDataProducts();
-        //   delete Product.idOrder;
-        //   Product.totalValue = 333.333;
-        //   Product.status = 1;
       }
     });
   }

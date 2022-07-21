@@ -17,13 +17,13 @@
             <app-user-select [(userSelectedId)]="userSelectedId" [parentForm]="formOrder"></app-user-select>
             <div *ngIf="formOrder.get('idUser')?.invalid && 
             formOrder.get('idUser')?.errors && 
-            (formOrder.get('idUser')?.dirty || formOrder.get('idUser')?.touched)">
+            (formOrder.get('idUser')?.touched)">
                 <small class="text-danger" *ngIf="formOrder.get('idUser')?.hasError('required')">
                     This field is required.
                 </small>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <!-- <input type="text" pInputText class="form-control bg-dark text-white" id="dateTime"
                 placeholder="Date Needed" aria-label="Date Needed" formControlName="dateTime"> -->
             <!-- <p-calendar inputId="basic" id="dateTime" placeholder="Date Needed" aria-label="Date Needed"
@@ -40,7 +40,13 @@
                 </small>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
+            <label for="totalValue" class="col-sm-2 col-form-label col-form-label-sm w-100">Value units:</label>
+            <p-inputNumber inputId="totalValue" mode="decimal" locale="en-US" [minFractionDigits]="2" id="totalValue"
+                placeholder="Total" aria-label="Total" formControlName="totalValue" [style]="{'width':'17.5rem'}">
+            </p-inputNumber>
+        </div>
+        <div class="col-md-4">
             <label for="providerName" class="col-sm-2 col-form-label col-form-label-sm w-100">Provider Name:</label>
             <input type="text" pInputText class="form-control bg-dark text-white" id="providerName"
                 placeholder="Provider Name" aria-label="Provider Name" formControlName="providerName">
@@ -54,7 +60,7 @@
     <div #buttons class="d-flex align-content-center justify-content-end mt-4">
         <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
             (click)="hideDialog($event)"></button>
-        <button pButton pRipple label="Save" [disabled]="formOrder.invalid" icon="pi pi-check" class="p-button-text"
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
             (click)="saveProduct($event)"></button>
 
     </div>

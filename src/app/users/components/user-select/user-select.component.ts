@@ -3,14 +3,12 @@ import { UsersService } from './../../services/users.service';
 import {
   Component,
   Input,
-  OnInit,
   Output,
   EventEmitter,
-  AfterViewInit,
   AfterContentChecked,
   ChangeDetectorRef,
 } from '@angular/core';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-user-select',
@@ -26,7 +24,9 @@ export class UserSelectComponent implements AfterContentChecked {
   constructor(private usrSrv: UsersService, private ref: ChangeDetectorRef) {
     this.usrSrv.getAllUser().subscribe((data) => (this.users = [...data]));
   }
-
+  /**
+   * angular life cicle function for no error NG100
+   */
   ngAfterContentChecked(): void {
     this.ref.detectChanges();
   }

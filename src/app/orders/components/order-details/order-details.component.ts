@@ -19,7 +19,10 @@ export class OrderDetailsComponent implements OnInit {
     public config: DynamicDialogConfig,
     private fb: FormBuilder
   ) {}
-
+  /**
+   * angular life cycle to implements the construction of the form for data of order
+   * and put into "inputOrderData" variable the information in case it was a modifying
+   */
   ngOnInit(): void {
     this.inputOrderData = { ...this.config.data };
     this.inputOrderData.dateTime &&
@@ -27,22 +30,22 @@ export class OrderDetailsComponent implements OnInit {
         0,
         this.inputOrderData.dateTime?.indexOf('T')
       ));
-    // this.inputOrderData.dateTime = formatDate(
-    //   this.inputOrderData?.dateTime || '',
-    //   'yyyy-mm-dd',
-    //   'en-EN'
-    // );
     this.formOrder = this.fb.group({
       orderNumber: [this.inputOrderData.orderNumber ?? '', Validators.required],
       dateTime: [this.inputOrderData.dateTime ?? '', Validators.required],
       idUser: [this.inputOrderData.idUser ?? null, Validators.required],
+      totalValue: [this.inputOrderData.totalValue ?? ''],
       providerName: [this.inputOrderData.providerName ?? ''],
       observation: [this.inputOrderData.observation ?? ''],
     });
   }
-
+  /**
+   * get de form order information and put into "savedOrder" variable for send it to
+   * the component "OrderListComponent", as long the form as valid
+   */
   saveProduct($event: any) {
     $event.preventDefault();
+    this.formOrder.markAllAsTouched();
     if (this.formOrder.valid) {
       let savedOrder: OrderDTO = {
         ...this.formOrder.value,
@@ -51,7 +54,9 @@ export class OrderDetailsComponent implements OnInit {
       this.ref.close(savedOrder);
     }
   }
-
+  /**
+   * close the dialog component
+   */
   hideDialog($event: any) {
     $event.preventDefault();
     this.ref.close(null);
