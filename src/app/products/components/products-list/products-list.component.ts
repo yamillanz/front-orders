@@ -1,9 +1,9 @@
 import { ProductService } from './../../services/product.service';
 import { ProductDTO } from './../../models/product';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
@@ -12,9 +12,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   styleUrls: ['./products-list.component.scss'],
   providers: [DialogService, MessageService, ConfirmationService],
 })
-export class ProductsListComponent implements OnInit {
+export class ProductsListComponent implements OnInit, OnDestroy {
   @Input() idOrder: string = '';
   products: ProductDTO[] = [];
+  subs: Subscription = new Subscription();
 
   constructor(
     private productsSvr: ProductService,
@@ -24,10 +25,12 @@ export class ProductsListComponent implements OnInit {
   ) {}
 
   gettingDataProducts() {
-    this.productsSvr.getProducts(+this.idOrder).subscribe((data) => {
-      console.log(data);
-      this.products = data;
-    });
+    this.subs.add(
+      this.productsSvr.getProducts(+this.idOrder).subscribe((data) => {
+        console.log(data);
+        this.products = data;
+      })
+    );
   }
   ngOnInit(): void {
     this.gettingDataProducts();
@@ -92,5 +95,9 @@ export class ProductsListComponent implements OnInit {
         //   Product.status = 1;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 }

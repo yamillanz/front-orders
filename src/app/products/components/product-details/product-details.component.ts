@@ -1,5 +1,5 @@
 import { ProductDTO } from './../../models/product';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
@@ -7,6 +7,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
   selector: 'app-products-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductDetailsComponent implements OnInit {
   submitted: boolean = false;
@@ -51,7 +52,7 @@ export class ProductDetailsComponent implements OnInit {
     if (this.formProduct.valid) {
       let savedProduct: ProductDTO = {
         ...this.formProduct.value,
-        idOrderProduct: this.inputProductData.idOrder,
+        idOrderProduct: this.inputProductData.idOrderProduct,
         idOrder: this.inputProductData.idOrder,
       };
       this.ref.close(savedProduct);

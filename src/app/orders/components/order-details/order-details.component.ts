@@ -2,7 +2,6 @@ import { OrderDTO } from './../../models/order';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-order-details',
@@ -28,13 +27,11 @@ export class OrderDetailsComponent implements OnInit {
         0,
         this.inputOrderData.dateTime?.indexOf('T')
       ));
-    console.log('datetime original', this.inputOrderData.dateTime);
     // this.inputOrderData.dateTime = formatDate(
     //   this.inputOrderData?.dateTime || '',
     //   'yyyy-mm-dd',
     //   'en-EN'
     // );
-    console.log('datetime', this.inputOrderData.dateTime);
     this.formOrder = this.fb.group({
       orderNumber: [this.inputOrderData.orderNumber ?? '', Validators.required],
       dateTime: [this.inputOrderData.dateTime ?? '', Validators.required],
@@ -42,7 +39,6 @@ export class OrderDetailsComponent implements OnInit {
       providerName: [this.inputOrderData.providerName ?? ''],
       observation: [this.inputOrderData.observation ?? ''],
     });
-    // this.formOrder.value
   }
 
   saveProduct($event: any) {

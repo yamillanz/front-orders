@@ -15,6 +15,13 @@
         <div class="col-6">
             <label for="idUser" class="col-sm-2 col-form-label col-form-label-sm w-100">User:</label>
             <app-user-select [(userSelectedId)]="userSelectedId" [parentForm]="formOrder"></app-user-select>
+            <div *ngIf="formOrder.get('idUser')?.invalid && 
+            formOrder.get('idUser')?.errors && 
+            (formOrder.get('idUser')?.dirty || formOrder.get('idUser')?.touched)">
+                <small class="text-danger" *ngIf="formOrder.get('idUser')?.hasError('required')">
+                    This field is required.
+                </small>
+            </div>
         </div>
         <div class="col-md-6">
             <!-- <input type="text" pInputText class="form-control bg-dark text-white" id="dateTime"
