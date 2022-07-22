@@ -31,9 +31,12 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     return this.dialogService.open(ProductDetailsComponent, {
       header: 'Order Details',
       width: '60%',
-      data: dataInput,
+      data: { ...dataInput },
     });
   }
+  /**
+   * get all products calling the rest api and put it into "orders" variable
+   */
   gettingDataProducts() {
     this.subs.add(
       this.productsSvr.getProducts(+this.idOrder).subscribe((data) => {
@@ -45,14 +48,29 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.gettingDataProducts();
   }
-
-  updateProduct(product: ProductDTO) {
-    const ref = this.dialogService.open(ProductDetailsComponent, {
-      data: { ...product },
-      header: 'Product Details ' + product.idOrderProduct,
-      width: '50%',
+  /**
+   * create and show the dialog with product's form, next, after close the dialog
+   * get the data and send it to the rest api""
+   */
+  newProductShow() {
+    const dialogProduct = this.createOrderDetailsDialog();
+    dialogProduct.onClose.subscribe(async (product: ProductDTO) => {
+      if (product) {
+        product.idOrder = +this.idOrder;
+        product.status = 1;
+        await firstValueFrom(this.productsSvr.saveAProduct(product));
+        this.gettingDataProducts();
+      }
     });
-    ref.onClose.subscribe(async (product: ProductDTO) => {
+  }
+
+  /**
+   * create and show the dialog with product's form, next, after close the dialog
+   * get the data and send it to the rest api ""
+   */
+  updateProduct(product: ProductDTO) {
+    const dialogProduct = this.createOrderDetailsDialog(product);
+    dialogProduct.onClose.subscribe(async (product: ProductDTO) => {
       if (product) {
         const { idOrderProduct, ...restDataProduct } = product;
         product.idOrder = +this.idOrder;
@@ -64,6 +82,10 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * function to do a logical delete to the order, first ask for confirm, then send
+   * the data to the rest api and finally send a confirmation messages
+   */
   deleteProduct(product: ProductDTO) {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete the selected product?',
@@ -83,24 +105,6 @@ export class ProductsListComponent implements OnInit, OnDestroy {
           life: 3000,
         });
       },
-    });
-  }
-
-  newProductShow() {
-    const ref = this.dialogService.open(ProductDetailsComponent, {
-      header: 'Product Details',
-      width: '50%',
-    });
-    ref.onClose.subscribe(async (product: ProductDTO) => {
-      if (product) {
-        product.idOrder = +this.idOrder;
-        product.status = 1;
-        await firstValueFrom(this.productsSvr.saveAProduct(product));
-        this.gettingDataProducts();
-        //   delete Product.idOrder;
-        //   Product.totalValue = 333.333;
-        //   Product.status = 1;
-      }
     });
   }
 

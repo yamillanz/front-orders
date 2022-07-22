@@ -64,7 +64,6 @@ export class OrderListComponent implements OnInit {
    * create and show the dialog with order's form, next, after close the dialog
    * get the data and send it to the rest api ""
    */
-
   updateOrder(order: OrderDTO) {
     const dialog = this.createOrderDetailsDialog(order);
     dialog.onClose.subscribe(async (Order: OrderDTO) => {
