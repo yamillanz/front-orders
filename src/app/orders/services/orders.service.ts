@@ -20,14 +20,14 @@ export class OrdersService {
     return this.http.get<OrderDTO[]>(environment.URL_ORDERS).pipe(
       map((data) => data.filter((order) => order.status === 1)),
       tap(async (data) => {
+        const users: UserDTO[] = await firstValueFrom(
+          this.usrService.getAllUser()
+        );
         for (const order of data) {
-          let user: UserDTO = {};
-          user = {
-            ...(await firstValueFrom(
-              this.usrService.getAUser(order.idUser || -1)
-            )),
-          };
-          order.userName = user.name;
+          const user: UserDTO | undefined = users.find(
+            (userdata) => userdata.idUser === order.idUser
+          );
+          order.userName = user?.name;
         }
       })
     );
@@ -46,6 +46,7 @@ export class OrdersService {
   update(idOrder: number, orderUpdated: OrderDTO): Observable<any> {
     typeof orderUpdated.orderNumber === 'string' &&
       (orderUpdated.orderNumber = +orderUpdated.orderNumber);
+    orderUpdated.dateTime = orderUpdated.dateTime?.substring(0, 10);
 
     return this.http.put(environment.URL_ORDERS + idOrder, orderUpdated);
   }
