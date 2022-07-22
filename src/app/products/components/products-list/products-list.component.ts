@@ -1,9 +1,9 @@
 import { ProductService } from './../../services/product.service';
 import { ProductDTO } from './../../models/product';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
-import { firstValueFrom, Subscription } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
@@ -12,10 +12,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   styleUrls: ['./products-list.component.scss'],
   providers: [DialogService, MessageService, ConfirmationService],
 })
-export class ProductsListComponent implements OnInit, OnDestroy {
+export class ProductsListComponent implements OnInit {
   @Input() idOrder: string = '';
   products: ProductDTO[] = [];
-  subs: Subscription = new Subscription();
+  products$: Observable<ProductDTO[]> = new Observable<ProductDTO[]>();
 
   constructor(
     private productsSvr: ProductService,
@@ -39,13 +39,9 @@ export class ProductsListComponent implements OnInit, OnDestroy {
    * add the subscription result into "sub" variable for do unsubscribe later
    */
   gettingDataProducts() {
-    this.subs.add(
-      this.productsSvr.getProducts(+this.idOrder).subscribe((data) => {
-        console.log(data);
-        this.products = data;
-      })
-    );
+    this.products$ = this.productsSvr.getProducts(+this.idOrder);
   }
+
   ngOnInit(): void {
     this.gettingDataProducts();
   }
@@ -107,9 +103,5 @@ export class ProductsListComponent implements OnInit, OnDestroy {
         });
       },
     });
-  }
-
-  ngOnDestroy(): void {
-    this.subs.unsubscribe();
   }
 }

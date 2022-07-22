@@ -3,7 +3,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { Component, OnInit } from '@angular/core';
 import { OrderDTO } from '../../models/order';
 import { OrdersService } from '../../services/orders.service';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
@@ -13,7 +13,9 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   providers: [DialogService, MessageService, ConfirmationService],
 })
 export class OrderListComponent implements OnInit {
-  orders: OrderDTO[] = [];
+  // orders: OrderDTO[] = [];
+  // orders$: Observable<OrderDTO[]> = this.orderServices.orders$;
+  orders$: Observable<OrderDTO[]> = new Observable<OrderDTO[]>();
 
   constructor(
     private orderServices: OrdersService,
@@ -40,10 +42,7 @@ export class OrderListComponent implements OnInit {
    * get all orders calling the rest api and put it into "orders" variable
    */
   private gettingDataOrders() {
-    this.orderServices.getOrders().subscribe((data) => {
-      console.log(data);
-      this.orders = data;
-    });
+    this.orders$ = this.orderServices.getOrders();
   }
   /**
    * create and show the dialog with order's form, next, after close the dialog

@@ -1,5 +1,5 @@
-<p-table #dtOrders [value]="orders" styleClass="p-datatable-striped p-datatable-sm" responsiveLayout="scroll"
-    [globalFilterFields]="['userName']" [paginator]="true" [rows]="10" dataKey="idOrder">
+<p-table #dtOrders [value]="(orders$ | async) || []" styleClass="p-datatable-striped p-datatable-sm"
+    responsiveLayout="scroll" [globalFilterFields]="['userName']" [paginator]="true" [rows]="10" dataKey="idOrder">
     <ng-template pTemplate="caption">
         <div class="d-flex align-items-center justify-content-between">
             <h5 class="m-0">Manage Orders</h5>

@@ -1,5 +1,6 @@
 <div class="m-3">
-    <p-table [value]="products" dataKey="idOrderProduct" responsiveLayout="scroll" [paginator]="false" [rows]="5">
+    <p-table [value]="(products$ |async) || []" dataKey="idOrderProduct" responsiveLayout="scroll" [paginator]="false"
+        [rows]="5">
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="idOrderProduct">ID <p-sortIcon field="idOrderProduct"></p-sortIcon>

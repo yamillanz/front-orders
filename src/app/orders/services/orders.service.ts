@@ -10,7 +10,11 @@ import { UsersService } from './../../users/services/users.service';
   providedIn: 'root',
 })
 export class OrdersService {
-  constructor(private http: HttpClient, private usrService: UsersService) {}
+  orders$: Observable<OrderDTO[]> = new Observable<OrderDTO[]>();
+
+  constructor(private http: HttpClient, private usrService: UsersService) {
+    this.orders$ = this.getOrders();
+  }
   /**
    * get all data from the orders rest api. First filter only the active order (status == 1) and next
    * get de data information from the user's order (name, email, etc...)
