@@ -36,6 +36,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   }
   /**
    * get all products calling the rest api and put it into "orders" variable
+   * add the subscription result into "sub" variable for do unsubscribe later
    */
   gettingDataProducts() {
     this.subs.add(
