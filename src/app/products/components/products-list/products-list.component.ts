@@ -25,7 +25,9 @@ export class ProductsListComponent implements OnInit {
   ) {}
 
   /**
-   * create a dialog object of "ProductDetailsComponent" type with certain characteristics
+   * create a dialog object of "OrderDetailsComponent" type with certain characteristics
+   * @param dataInput data to pass to the dialog
+   * @returns
    */
   private createOrderDetailsDialog(dataInput: any = null) {
     return this.dialogService.open(ProductDetailsComponent, {
@@ -64,6 +66,7 @@ export class ProductsListComponent implements OnInit {
   /**
    * create and show the dialog with product's form, next, after close the dialog
    * get the data and send it to the rest api ""
+   * @param product product to update
    */
   updateProduct(product: ProductDTO) {
     const dialogProduct = this.createOrderDetailsDialog(product);
@@ -82,6 +85,7 @@ export class ProductsListComponent implements OnInit {
   /**
    * function to do a logical delete to the order, first ask for confirm, then send
    * the data to the rest api and finally send a confirmation messages
+   * @param product
    */
   deleteProduct(product: ProductDTO) {
     this.confirmationService.confirm({

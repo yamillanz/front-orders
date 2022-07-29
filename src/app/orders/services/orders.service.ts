@@ -19,6 +19,7 @@ export class OrdersService {
    * get all data from the orders rest api. First filter only the active order (status == 1) and next
    * get de data information from the user's order (name, email, etc...)
    * return a array of Observables of DTO class
+   * @returns a array of orders DTO into a Observable Object
    */
   getOrders(): Observable<OrderDTO[]> {
     return this.http.get<OrderDTO[]>(environment.URL_ORDERS).pipe(
@@ -38,6 +39,8 @@ export class OrdersService {
   }
   /**
    * save the data order calls the rest api post method
+   * @param newOrder type OrderDTO
+   * @returns a observable object woth the api's response
    */
   saveOrder(newOrder: OrderDTO): Observable<any> {
     typeof newOrder.orderNumber === 'string' &&
@@ -46,6 +49,9 @@ export class OrdersService {
   }
   /**
    * update the data order calls the rest api put method
+   * @param idOrder
+   * @param orderUpdated
+   * @returns a observable object woth the api's response
    */
   update(idOrder: number, orderUpdated: OrderDTO): Observable<any> {
     typeof orderUpdated.orderNumber === 'string' &&

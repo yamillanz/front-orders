@@ -12,6 +12,8 @@ export class ProductService {
 
   /**
    * function to adapt the fields from the form to the rest api needs
+   * @param product
+   * @returns a product with class productDTO
    */
   private adapterProduct(product: ProductDTO): ProductDTO {
     let productAdapter: ProductDTO = { ...product };
@@ -38,6 +40,8 @@ export class ProductService {
   /**
    * get all data from the product's rest api. First filter only the active products (status == 1)
    * return a array of Observables of DTO class
+   * @param idOrder type number
+   * @returns a array of product DTO into a Observable object
    */
   getProducts(idOrder: number): Observable<ProductDTO[]> {
     return this.http
@@ -52,13 +56,17 @@ export class ProductService {
   }
   /**
    * get one product calling the rest api.
-   * return a Observables of DTO class
+   * return a Observables of DTO class   *
+   * @param idProduct number
+   * @returns a product DTO into a Observable object
    */
   getAProduct(idProduct: number): Observable<ProductDTO> {
     return this.http.get<ProductDTO>(environment.URL_PRODUCTS + idProduct);
   }
   /**
    * save the data from the product calling the rest api post method.
+   * @param newProduct type ProductDTO
+   * @returns
    */
   saveAProduct(newProduct: ProductDTO): Observable<any> {
     newProduct = { ...this.adapterProduct(newProduct) };
@@ -66,6 +74,9 @@ export class ProductService {
   }
   /**
    * update the data from the product calling the rest api post method.
+   * @param idProduct
+   * @param product
+   * @returns a observable with the api response
    */
   updateProduct(idProduct: number, product: ProductDTO): Observable<any> {
     product = { ...this.adapterProduct(product) };

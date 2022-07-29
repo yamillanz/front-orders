@@ -42,6 +42,7 @@ export class OrderDetailsComponent implements OnInit {
   /**
    * get de form order information and put into "savedOrder" variable for send it to
    * the component "OrderListComponent", as long the form as valid
+   * @param $event the input form
    */
   saveProduct($event: any) {
     $event.preventDefault();
@@ -56,6 +57,7 @@ export class OrderDetailsComponent implements OnInit {
   }
   /**
    * close the dialog component
+   * @param $event the input form
    */
   hideDialog($event: any) {
     $event.preventDefault();

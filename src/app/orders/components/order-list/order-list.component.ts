@@ -30,6 +30,8 @@ export class OrderListComponent implements OnInit {
 
   /**
    * create a dialog object of "OrderDetailsComponent" type with certain characteristics
+   * @param dataInput data to pass to the dialog
+   * @returns
    */
   private createOrderDetailsDialog(dataInput: any = null) {
     return this.dialogService.open(OrderDetailsComponent, {
@@ -62,6 +64,7 @@ export class OrderListComponent implements OnInit {
   /**
    * create and show the dialog with order's form, next, after close the dialog
    * get the data and send it to the rest api ""
+   * @param order a order to update
    */
   updateOrder(order: OrderDTO) {
     const dialog = this.createOrderDetailsDialog(order);
@@ -78,6 +81,7 @@ export class OrderListComponent implements OnInit {
   /**
    * function to do a logical delete to the order, first ask for confirm, then send
    * the data to the rest api and finally send a confirmation messages
+   * @param order the order to delete
    */
   async deleteOrder(order: OrderDTO) {
     this.confirmationService.confirm({
