@@ -54,14 +54,6 @@ export class ProductsListComponent implements OnInit, OnDestroy {
    */
   newProductShow() {
     const dialogProduct = this.createOrderDetailsDialog();
-    // dialogProduct.onClose.subscribe(async (product: ProductDTO) => {
-    //   if (product) {
-    //     product.idOrder = +this.idOrder;
-    //     product.status = 1;
-    //     await firstValueFrom(this.productsSvr.saveAProduct(product));
-    //     this.gettingDataProducts();
-    //   }
-    // });
     dialogProduct.onClose
       .pipe(
         tap(async (product: ProductDTO) => {
