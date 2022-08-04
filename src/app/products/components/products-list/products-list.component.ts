@@ -3,7 +3,7 @@ import { ProductDTO } from './../../models/product';
 import { Component, Input, OnInit } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
-import { firstValueFrom, Observable } from 'rxjs';
+import { firstValueFrom, Observable, Subject, tap, takeUntil } from 'rxjs';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
@@ -16,6 +16,7 @@ export class ProductsListComponent implements OnInit {
   @Input() idOrder: string = '';
   products: ProductDTO[] = [];
   products$: Observable<ProductDTO[]> = new Observable<ProductDTO[]>();
+  private destryer$: Subject<any> = new Subject();
 
   constructor(
     private productsSvr: ProductService,
@@ -53,14 +54,27 @@ export class ProductsListComponent implements OnInit {
    */
   newProductShow() {
     const dialogProduct = this.createOrderDetailsDialog();
-    dialogProduct.onClose.subscribe(async (product: ProductDTO) => {
-      if (product) {
-        product.idOrder = +this.idOrder;
-        product.status = 1;
-        await firstValueFrom(this.productsSvr.saveAProduct(product));
-        this.gettingDataProducts();
-      }
-    });
+    // dialogProduct.onClose.subscribe(async (product: ProductDTO) => {
+    //   if (product) {
+    //     product.idOrder = +this.idOrder;
+    //     product.status = 1;
+    //     await firstValueFrom(this.productsSvr.saveAProduct(product));
+    //     this.gettingDataProducts();
+    //   }
+    // });
+    dialogProduct.onClose
+      .pipe(
+        tap(async (product: ProductDTO) => {
+          if (product) {
+            product.idOrder = +this.idOrder;
+            product.status = 1;
+            await firstValueFrom(this.productsSvr.saveAProduct(product));
+            this.gettingDataProducts();
+          }
+        }),
+        takeUntil(this.destryer$)
+      )
+      .subscribe();
   }
 
   /**
@@ -70,16 +84,24 @@ export class ProductsListComponent implements OnInit {
    */
   updateProduct(product: ProductDTO) {
     const dialogProduct = this.createOrderDetailsDialog(product);
-    dialogProduct.onClose.subscribe(async (product: ProductDTO) => {
-      if (product) {
-        const { idOrderProduct, ...restDataProduct } = product;
-        product.idOrder = +this.idOrder;
-        await firstValueFrom(
-          this.productsSvr.updateProduct(idOrderProduct ?? -1, restDataProduct)
-        );
-        this.gettingDataProducts();
-      }
-    });
+    dialogProduct.onClose
+      .pipe(
+        tap(async (product: ProductDTO) => {
+          if (product) {
+            const { idOrderProduct, ...restDataProduct } = product;
+            product.idOrder = +this.idOrder;
+            await firstValueFrom(
+              this.productsSvr.updateProduct(
+                idOrderProduct ?? -1,
+                restDataProduct
+              )
+            );
+            this.gettingDataProducts();
+          }
+        }),
+        takeUntil(this.destryer$)
+      )
+      .subscribe();
   }
 
   /**
